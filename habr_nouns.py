@@ -95,7 +95,7 @@ def get_formatted_data(raw_data):
     return formatted_date
 
 
-def get_next_page_url_from_response(response):
+def get_next_page_url_from_habr(response):
     soup = BeautifulSoup(response, "html.parser")
     next_page = soup.find('a', {'id': 'next_page'}).attrs.get('href')
     next_page = urljoin(START_URL, next_page)
@@ -124,7 +124,7 @@ def get_data_from_habr(pages):
     while True:
         raw_data = get_raw_data_from_habr(response)
         data.extend(get_formatted_data(raw_data))
-        next_page = get_next_page_url_from_response(response)
+        next_page = get_next_page_url_from_habr(response)
         if not next_page:
             break
         page_number = get_page_number_from_url(next_page)
