@@ -73,7 +73,7 @@ class TestHabrNouns(unittest.TestCase):
         ]
 
         self.assertCountEqual(
-            habr_nouns.get_dict_nouns_of_weeks(test_list),
+            habr_nouns.create_dict_with_nouns_by_weeks(test_list),
             {
                 ('09/04/2018', '15/04/2018'):
                     ['голос', 'программирование', 'анализ', 'код'],
