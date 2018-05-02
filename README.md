@@ -2,7 +2,7 @@ habr_nouns
 ==
 
 Parse n pages of the general feed of habr.com,  pull out the headings and dates of the articles from them. 
-Put all nouns in a normal form and output the three most popular nouns for each week.
+Put all nouns in a normal form and output the most popular nouns for each week.
 
 Example
 --
@@ -52,7 +52,7 @@ The script has 2 option to run:
 
 *example:* *$ python3 habr_nouns.py -p 2*
 
-**-t (--top)** - number of top words 
+**-t (--top)** - number of top nouns 
 
 **default:** 3 
 
