@@ -50,7 +50,7 @@ just clone the project and install the requirements:
 Docs
 --
 
-The script has 1 option to run:
+The script has 2 option to run:
 
 **-p (--pages)** - number of pages for parsing 
 
@@ -58,6 +58,11 @@ The script has 1 option to run:
 
 *example:* *$ python3 habr_nouns.py -p 2*
 
+**-t (--top)** - number of top words 
+
+**default:** 3 
+
+*example:* *$ python3 habr_nouns.py -t 4*
 
 Contributing
 --

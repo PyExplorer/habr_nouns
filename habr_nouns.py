@@ -18,12 +18,18 @@ START_URL = 'https://habr.com/all/'
 def parse_args():
     parser = ArgumentParser(description='Static noun code analyser.')
     parser.add_argument('-p', '--pages', type=int, default=20, dest='pages')
+    parser.add_argument('-t', '--top', type=int, default=3, dest='top')
     return parser.parse_args()
 
 
 def get_number_of_page():
     args = parse_args()
     return args.pages
+
+
+def get_top_words():
+    args = parse_args()
+    return args.top
 
 
 def get_response(url):
@@ -37,7 +43,7 @@ def get_response(url):
     return v_data
 
 
-def get_raw_data_from_response(response):
+def get_raw_data_from_habr(response):
     raw_data = []
     soup = BeautifulSoup(response, "html.parser")
     articles = soup.findAll('article', {'class': 'post_preview'})
@@ -116,7 +122,7 @@ def get_data_from_habr(pages):
     if not response:
         return []
     while True:
-        raw_data = get_raw_data_from_response(response)
+        raw_data = get_raw_data_from_habr(response)
         data.extend(get_formatted_data(raw_data))
         next_page = get_next_page_url_from_response(response)
         if not next_page:
@@ -256,13 +262,13 @@ def output_results(list_nouns_with_dates):
     )
 
 
-def get_most_common_words(nouns_with_dates, number=3):
+def get_most_common_words(nouns_with_dates, top=3):
     most_common_words = []
     for one_week in nouns_with_dates:
         most_common_words.append(
             (
                 one_week[0],
-                [mcw for mcw in Counter(one_week[1]).most_common(number)]
+                [mcw for mcw in Counter(one_week[1]).most_common(top)]
             )
         )
     return most_common_words
@@ -281,10 +287,14 @@ def prepare_most_common_words_to_output(most_common_words):
 
 def main():
     pages = get_number_of_page()
+    top = get_top_words()
     data = get_data_from_habr(pages)
     dict_with_nouns_by_weeks = create_dict_with_nouns_by_weeks(data)
     list_with_nouns_by_weeks = dict_to_list(dict_with_nouns_by_weeks)
-    most_common_words_by_weeks = get_most_common_words(list_with_nouns_by_weeks)
+    most_common_words_by_weeks = get_most_common_words(
+        list_with_nouns_by_weeks,
+        top
+    )
     most_common_words_by_weeks_to_output = prepare_most_common_words_to_output(
         most_common_words_by_weeks
     )
