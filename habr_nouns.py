@@ -280,7 +280,7 @@ def prepare_most_common_words_to_output(most_common_words):
         prepared_most_common_words.append(
             (word[0][0],
              word[0][1],
-             ', '.join(w[0] for w in word[1]))
+             ', '.join('{}({})'.format(w[0], w[1]) for w in word[1]))
         )
     return prepared_most_common_words
 
@@ -292,7 +292,7 @@ def main():
     dict_with_nouns_by_weeks = create_dict_with_nouns_by_weeks(data)
     list_with_nouns_by_weeks = dict_to_list(dict_with_nouns_by_weeks)
     most_common_words_by_weeks = get_most_common_words(
-        list_with_nouns_by_weeks,
+        sorted(list_with_nouns_by_weeks),
         top
     )
     most_common_words_by_weeks_to_output = prepare_most_common_words_to_output(
